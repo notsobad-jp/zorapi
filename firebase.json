@@ -1,0 +1,32 @@
+{
+  "hosting": {
+    "public": "",
+    "rewrites": [
+      {
+        "source": "/v1/books/*",
+        "function": "book"
+      },
+      {
+        "source": "/v1/books",
+        "function": "books"
+      },
+      {
+        "source": "/v1/persons/*",
+        "function": "person"
+      },
+      {
+        "source": "/v1/persons",
+        "function": "persons"
+      },
+      {
+        "source": "**",
+        "destination": "https://github.com/#"
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
