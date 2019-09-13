@@ -13,19 +13,23 @@ exports.books = functions.https.onRequest((request, response) => {
   let bookRegex = (request.query['作品名'] || "").match(/\/(.*)\//);
   let personRegex = (request.query['姓名'] || "").match(/\/(.*)\//);
   if(bookRegex || personRegex ) {
-    let matchedIDs = doSearch(bookRegex[1], personRegex[1]);
-    // if(request.query['after']) { docRef = docRef.startAfter(val); }
-    // if(request.query['limit']) { docRef = docRef.limit(val); }
-    let docRefs = matchedIDs.map(function(m){ return docRef.doc(m); });
-    admin.firestore().getAll(docRefs).then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        results.push(doc.data());
+    let br = bookRegex ? bookRegex[1] : "";
+    let pr = personRegex ? personRegex[1] : "";
+    let matchedIDs = doSearch(br, pr).then(function(matchedIDs){
+      // TODO: 正規表現時のページング処理
+      // if(request.query['after']) { docRef = docRef.startAfter(val); }
+      // if(request.query['limit']) { docRef = docRef.limit(val); }
+      let docRefs = matchedIDs.map(function(m){ return docRef.doc(m); });
+      admin.firestore().getAll(...docRefs).then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          results.push(doc.data());
+        });
+        response.send(results);
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+        response.status(500).send("Failure!!");
       });
-      response.send("Hello from Firebase!");
-    })
-    .catch(function(error) {
-      console.log("Error getting documents: ", error);
-      response.status(500).send("Failure!!");
     });
   // それ以外はrequestから検索クエリ組み立て
   } else {
@@ -45,11 +49,11 @@ exports.books = functions.https.onRequest((request, response) => {
     if(request.query['after']) { docRef = docRef.startAfter(val); }
     if(request.query['limit']) { docRef = docRef.limit(val); }
 
-    docRef.get().then(function(querySnapshot) => {
+    docRef.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         results.push(doc.data());
       });
-      response.send("Hello from Firebase!");
+      response.send(results);
     })
     .catch(function(error) {
       console.log("Error getting documents: ", error);
@@ -72,7 +76,7 @@ function searchBooks(bookTitle, personName) {
     rs = fs.createReadStream('csv/books.csv');
     rs.pipe(csv({columns: true}))
       .on('data', (data) => {
-        if(data[column].match(bookRegex) && data[column].match(personRegex)){
+        if(data["作品名"].match(bookRegex) && data["姓名"].match(personRegex)){
           results.push(data["作品ID"])
         }
     });
