@@ -8,6 +8,8 @@ admin.initializeApp();
 * Books
 ***********************************************************************/
 exports.books = functions.https.onRequest((request, response) => {
+  // response.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+
   let results = { books: [] };
   let docRef = admin.firestore().collection('books');
 
