@@ -25,7 +25,7 @@ exports.books = functions.https.onRequest((request, response) => {
         response.status(200).send(results);
       })
       .catch(function(error) {
-        response.status(500).send(error);
+        response.status(500).send({ error: { message: error } });
       });
     });
   // それ以外はrequestから検索クエリ組み立て
@@ -38,7 +38,7 @@ exports.books = functions.https.onRequest((request, response) => {
       response.status(200).send(results);
     })
     .catch(function(error) {
-      response.status(500).send("Failure!!");
+      response.status(500).send({ error: { message: error } });
     });
   }
 });
@@ -57,7 +57,7 @@ exports.book = functions.https.onRequest((request, response) => {
     response.status(200).send(results);
   })
   .catch(function(error) {
-    response.status(500).send("Failure!!");
+    response.status(500).send({ error: { message: error } });
   });
 });
 
@@ -81,7 +81,7 @@ exports.persons = functions.https.onRequest((request, response) => {
         response.status(200).send(results);
       })
       .catch(function(error) {
-        response.status(500).send(error);
+        response.status(500).send({ error: { message: error } });
       });
     });
   // それ以外はrequestから検索クエリ組み立て
@@ -94,7 +94,7 @@ exports.persons = functions.https.onRequest((request, response) => {
       response.status(200).send(results);
     })
     .catch(function(error) {
-      response.status(500).send("Failure!!");
+      response.status(500).send({ error: { message: error } });
     });
   }
 });
@@ -113,7 +113,7 @@ exports.person = functions.https.onRequest((request, response) => {
     response.status(200).send(results);
   })
   .catch(function(error) {
-    response.status(500).send("Failure!!");
+    response.status(500).send({ error: { message: error } });
   });
 });
 
