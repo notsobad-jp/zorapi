@@ -14,17 +14,8 @@ exports.books = functions.https.onRequest((request, response) => {
   // 正規表現があるとき（他のクエリは無視）
   let regex = (request.query['作品名'] || "").match(/\/(.*)\//);
   if(regex) {
-    let matchedIDs = search("books", regex[1], request.query['人物ID']).then(function(matchedIDs){
-      // 正規表現時のページング処理
-      let limit = Math.min(request.query['limit'] || 50, 50);
-      if(before = request.query['before']) {
-        let startIndex = matchedIDs.findIndex(before) - limit;
-      }else {
-        let startIndex = (after = request.query['after']) ? matchedIDs.findIndex(after) + 1 : 0;
-      }
-      matchedIDs = matchedIDs.slice(startIndex, startIndex + limit);
-
-      let docRefs = matchedIDs.map(function(m){ return docRef.doc(m); });
+    search("books", regex[1], request.query['人物ID']).then(function(matchedIDs){
+      let docRefs = setDocRefs(docRef, matchedIDs, request.query);
       admin.firestore().getAll(...docRefs).then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           results["books"].push(doc.data());
@@ -37,20 +28,7 @@ exports.books = functions.https.onRequest((request, response) => {
     });
   // それ以外はrequestから検索クエリ組み立て
   } else {
-    for(let [key, val] of Object.entries(request.query)) {
-      if(["order", "limit", "after", "before"].include(key)) { continue; }
-      docRef = docRef.where(key, "==", val);
-    }
-    // order, after/before, limit
-    if(order = request.query['order']) {
-      let match = order.match(/(.*)([⌃˅]?)/);
-      docRef = (match[2]=="⌃") ? docRef.orderBy(match[1]) : docRef.orderBy(match[1], 'desc');
-    }
-    if(after = request.query['after']) { docRef = docRef.startAfter(after); }
-    if(before = request.query['before']) { docRef = docRef.endBefore(before); }
-    let limit = Math.min(request.query['limit'] || 50, 50);
-    docRef = docRef.limit(limit);
-
+    docRef = setDocRef(docRef, request.query);
     docRef.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         results["books"].push(doc.data());
@@ -92,17 +70,8 @@ exports.persons = functions.https.onRequest((request, response) => {
   // 正規表現があるとき（他のクエリは無視）
   let regex = (request.query['姓名'] || "").match(/\/(.*)\//);
   if(regex) {
-    let matchedIDs = search("persons", regex[1]).then(function(matchedIDs){
-      // 正規表現時のページング処理
-      let limit = Math.min(request.query['limit'] || 50, 50);
-      if(before = request.query['before']) {
-        let startIndex = matchedIDs.findIndex(before) - limit;
-      }else {
-        let startIndex = (after = request.query['after']) ? matchedIDs.findIndex(after) + 1 : 0;
-      }
-      matchedIDs = matchedIDs.slice(startIndex, startIndex + limit);
-
-      let docRefs = matchedIDs.map(function(m){ return docRef.doc(m); });
+    search("persons", regex[1]).then(function(matchedIDs){
+      let docRefs = setDocRefs(docRef, matchedIDs, request.query);
       admin.firestore().getAll(...docRefs).then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           results["persons"].push(doc.data());
@@ -115,20 +84,7 @@ exports.persons = functions.https.onRequest((request, response) => {
     });
   // それ以外はrequestから検索クエリ組み立て
   } else {
-    for(let [key, val] of Object.entries(request.query)) {
-      if(["order", "limit", "after", "before"].include(key)) { continue; }
-      docRef = docRef.where(key, "==", val);
-    }
-    // order, after/before, limit
-    if(order = request.query['order']) {
-      let match = order.match(/(.*)([⌃˅]?)/);
-      docRef = (match[2]=="⌃") ? docRef.orderBy(match[1]) : docRef.orderBy(match[1], 'desc');
-    }
-    if(after = request.query['after']) { docRef = docRef.startAfter(after); }
-    if(before = request.query['before']) { docRef = docRef.endBefore(before); }
-    let limit = Math.min(request.query['limit'] || 50, 50);
-    docRef = docRef.limit(limit);
-
+    docRef = setDocRef(docRef, request.query)
     docRef.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         results["persons"].push(doc.data());
@@ -166,19 +122,20 @@ exports.person = functions.https.onRequest((request, response) => {
 * Functions
 ***********************************************************************/
 async function search(type, keyword, personId) {
+  let searchResults = "";
   if(type=="books") {
-    let results = await searchBooks(keyword, personId);
+    searchResults = await searchBooks(keyword, personId);
   }else {
-    let results = await searchPersons(keyword);
+    searchResults = await searchPersons(keyword);
   }
-  return results;
+  return searchResults;
 }
 
 function searchBooks(bookTitle, personId) {
   return new Promise((resolve, reject) => {
     const results = [];
     let bookRegex = new RegExp(bookTitle);
-    let personRegex = (personId) ? new RegExp("\""+ personId +"\"") : new RegExp(".*"); // ID指定があれば完全一致、なければ何でもヒットするように
+    let personRegex = (personId) ? new RegExp(`^${personId}$`) : new RegExp(".*"); // ID指定があれば完全一致、なければ何でもヒットするように
     rs = fs.createReadStream('csv/books.csv');
     rs.pipe(csv({columns: true}))
       .on('data', (data) => {
@@ -207,4 +164,35 @@ function searchPersons(personName) {
       resolve(results);
     });
   })
+}
+
+// 通常のクエリ検索のときのページング処理
+function setDocRef(docRef, query) {
+  for(let [key, val] of Object.entries(query)) {
+    if(["order", "limit", "after", "before"].includes(key)) { continue; }
+    docRef = docRef.where(key, "==", val);
+  }
+  // order, after/before, limit
+  if(order = query['order']) {
+    let match = order.match(/(.*)([⌃˅]?)/);
+    docRef = (match[2]=="⌃") ? docRef.orderBy(match[1]) : docRef.orderBy(match[1], 'desc');
+  }
+  if(after = query['after']) { docRef = docRef.startAfter(after); }
+  if(before = query['before']) { docRef = docRef.endBefore(before); }
+  let limit = Math.min(query['limit'] || 50, 50);
+  return docRef.limit(limit);
+}
+
+// 正規表現のときのページング処理
+function setDocRefs(docRef, matchedIDs, query) {
+  let limit = Math.min(query['limit'] || 50, 50);
+  let startIndex = 0;
+  if(before = query['before']) {
+    startIndex = matchedIDs.findIndex(before) - limit;
+  }else if(after = query['after']) {
+    startIndex = matchedIDs.findIndex(after) + 1;
+  }
+  matchedIDs = matchedIDs.slice(startIndex, startIndex + limit);
+
+  return matchedIDs.map(function(m){ return docRef.doc(m); });
 }
