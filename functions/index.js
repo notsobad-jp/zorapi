@@ -14,9 +14,10 @@ exports.books = functions.https.onRequest((request, response) => {
   if(bookRegex) {
     let matchedIDs = doSearch(bookRegex[1], request.query['人物ID']).then(function(matchedIDs){
       // 正規表現時のページング処理
+      // TODO: beforeのとき
       let startIndex = (after = request.query['after']) ? matchedIDs.findIndex(after) : -1;
       let limit = Math.min(request.query['limit'] || 50, 50);
-      matchedIDs = matchedIDs.slice(startIndex + 1, startIndex + limit);
+      matchedIDs = matchedIDs.slice(startIndex + 1, startIndex + 1 + limit);
 
       // TODO: next/prevリンク組み立て
 
@@ -46,7 +47,7 @@ exports.books = functions.https.onRequest((request, response) => {
     if(before = request.query['before']) { docRef = docRef.endBefore(before); }
     let limit = Math.min(request.query['limit'] || 50, 50);
     docRef = docRef.limit(limit);
-    
+
     // TODO: next/prevリンク組み立て
 
     docRef.get().then(function(querySnapshot) {
