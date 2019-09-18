@@ -18,6 +18,7 @@ exports.books = functions.https.onRequest((request, response) => {
   if(regex) {
     search("books", regex[1], request.query['人物ID']).then(function(matchedIDs){
       let docRefs = setDocRefs(docRef, matchedIDs, request.query);
+      if(docRefs.length==0) { response.status(200).send(results); } // 検索結果がゼロ件のとき
       admin.firestore().getAll(...docRefs).then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           results["books"].push(doc.data());
@@ -74,6 +75,7 @@ exports.persons = functions.https.onRequest((request, response) => {
   if(regex) {
     search("persons", regex[1]).then(function(matchedIDs){
       let docRefs = setDocRefs(docRef, matchedIDs, request.query);
+      if(docRefs.length==0) { response.status(200).send(results); } // 検索結果がゼロ件のとき
       admin.firestore().getAll(...docRefs).then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           results["persons"].push(doc.data());
@@ -179,8 +181,8 @@ function setDocRef(docRef, query) {
     let match = order.match(/(.*)([⌃˅]?)/);
     docRef = (match[2]=="⌃") ? docRef.orderBy(match[1]) : docRef.orderBy(match[1], 'desc');
   }
-  if(after = query['after']) { docRef = docRef.startAfter(after); }
-  if(before = query['before']) { docRef = docRef.endBefore(before); }
+  if(order && (after = query['after'])) { docRef = docRef.startAfter(Number(after)); }
+  if(order && (before = query['before'])) { docRef = docRef.endBefore(Number(before)); }
   let limit = Math.min(query['limit'] || 50, 50);
   return docRef.limit(limit);
 }
