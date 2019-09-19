@@ -39,16 +39,18 @@ exports.books = functions.https.onRequest((request, response) => {
     docRef.limit(limit + 1).get().then(function(querySnapshot) {
       // +1件取れてるときは、元の件数に戻す
       let hasNext = querySnapshot.size == limit + 1;
-      let sliceIndex = request.query["before"] ? [1, querySnapshot.size] : [0, querySnapshot.size - 1];
-      let slicedDocs = (hasNext) ? querySnapshot.docs.slice(...sliceIndex) : querySnapshot.docs;
+      let slicedDocs = (hasNext) ? querySnapshot.docs.slice(0, querySnapshot.size - 1) : querySnapshot.docs;
+      if(request.query["before"]) { slicedDocs = slicedDocs.reverse(); } // beforeのときは逆順で取ってるで戻す
 
-      // [Next] limit+1取れてるかどうかだけで判断
-      if(hasNext) {
-        results["links"]["next"] = nextLink(request, slicedDocs.slice(-1)[0].data());
+      // [Next] limit+1取れてるか、beforeが存在すれば next linkつける
+      if(hasNext || request.query["before"]) {
+        let lastVisible = slicedDocs.slice(-1)[0].data();
+        results["links"]["next"] = nextLink(request, lastVisible);
       }
       // [Prev] before/afterの有無と、limit+1の組み合わせで判断
       if(request.query["after"] || (request.query["before"] && hasNext)) {
-        results["links"]["prev"] = prevLink(request, slicedDocs[0].data());
+        let firstVisible = slicedDocs[0].data();
+        results["links"]["prev"] = prevLink(request, firstVisible);
       }
 
       // querySnapshot.forEach(function(doc) {
@@ -201,19 +203,19 @@ function setDocRef(docRef, query) {
 
   // order, after/before, limit
   if(collection == 'books') {
-    docRef = docRef.orderBy("累計アクセス数", "desc").orderBy("作品ID");
+    docRef = (query['before']) ? docRef.orderBy("累計アクセス数").orderBy("作品ID", "desc") : docRef.orderBy("累計アクセス数", "desc").orderBy("作品ID");
     if(query['after']) {
       after = query['after'].match(/(\d+),(\d+)/);
       docRef = docRef.startAfter(Number(after[1]), after[2]);
     }
     if(query['before']) {
       before = query['before'].match(/(\d+),(\d+)/);
-      docRef = docRef.endBefore(Number(before[1]), before[2]);
+      docRef = docRef.startAfter(Number(before[1]), before[2]);
     }
   } else {
-    docRef = docRef.orderBy("人物ID");
+    docRef = (query['before']) ? docRef.orderBy("人物ID", "desc") : docRef.orderBy("人物ID");
     if(after = query['after']) { docRef = docRef.startAfter(Number(after)); }
-    if(before = query['before']) { docRef = docRef.endBefore(Number(before)); }
+    if(before = query['before']) { docRef = docRef.startAfter(Number(before)); }
   }
   return docRef;
 }
