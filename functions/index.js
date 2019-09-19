@@ -172,17 +172,23 @@ function searchPersons(personName) {
 
 // 通常のクエリ検索のときのページング処理
 function setDocRef(docRef, query) {
+  let collection = docRef.path; // books OR persons
+
   for(let [key, val] of Object.entries(query)) {
-    if(["order", "limit", "after", "before"].includes(key)) { continue; }
+    if(["limit", "after", "before"].includes(key)) { continue; }
     docRef = docRef.where(key, "==", val);
   }
+
   // order, after/before, limit
-  if(order = query['order']) {
-    let match = order.match(/(.*)([⌃˅]?)/);
-    docRef = (match[2]=="⌃") ? docRef.orderBy(match[1]) : docRef.orderBy(match[1], 'desc');
+  if(collection == 'books') {
+    docRef = docRef.orderBy("累計アクセス数", "desc").orderBy("作品ID");
+    if(after = query['after'].match(/(\d)+,(\d)+/)) { docRef = docRef.startAfter(Number(after[1]), after[2]); }
+    if(before = query['before'].match(/(\d)+,(\d)+/)) { docRef = docRef.startAfter(Number(before[1]), before[2]); }
+  } else {
+    docRef = docRef.orderBy("人物ID");
+    if(after = query['after']) { docRef = docRef.startAfter(Number(after)); }
+    if(before = query['before']) { docRef = docRef.endBefore(Number(before)); }
   }
-  if(order && (after = query['after'])) { docRef = docRef.startAfter(Number(after)); }
-  if(order && (before = query['before'])) { docRef = docRef.endBefore(Number(before)); }
   let limit = Math.min(query['limit'] || 50, 50);
   return docRef.limit(limit);
 }
