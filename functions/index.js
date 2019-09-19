@@ -37,26 +37,24 @@ exports.books = functions.https.onRequest((request, response) => {
     let limit = Math.min(request.query['limit'] || 50, 50);
     docRef = setDocRef(docRef, request.query);
     docRef.limit(limit + 1).get().then(function(querySnapshot) {
-      let docLength = querySnapshot.docs.length;
-      let hasNext = docLength == limit + 1;
-
       // +1件取れてるときは、元の件数に戻す
-      if(hasNext) {
-        let sliceIndex = request.query["before"] ? [1, docLength] : [0, docLength - 1];
-        querySnapshot.docs = querySnapshot.docs.slice(...sliceIndex);
-      }
+      let hasNext = querySnapshot.size == limit + 1;
+      let sliceIndex = request.query["before"] ? [1, querySnapshot.size] : [0, querySnapshot.size - 1];
+      let slicedDocs = (hasNext) ? querySnapshot.docs.slice(...sliceIndex) : querySnapshot.docs;
+
       // [Next] limit+1取れてるかどうかだけで判断
       if(hasNext) {
-        results["links"]["next"] = nextLink(request, querySnapshot.docs.slice(-1)[0]);
+        results["links"]["next"] = nextLink(request, slicedDocs.slice(-1)[0].data());
       }
       // [Prev] before/afterの有無と、limit+1の組み合わせで判断
       if(request.query["after"] || (request.query["before"] && hasNext)) {
-        results["links"]["prev"] = prevLink(request, querySnapshot.docs[0]);
+        results["links"]["prev"] = prevLink(request, slicedDocs[0].data());
       }
 
-      querySnapshot.forEach(function(doc) {
-        results["books"].push(doc.data());
-      });
+      // querySnapshot.forEach(function(doc) {
+      for(let i = 0; i < slicedDocs.length; i++) {
+        results["books"].push(slicedDocs[i].data());
+      };
       response.status(200).send(results);
     })
     .catch(function(error) {
@@ -205,12 +203,12 @@ function setDocRef(docRef, query) {
   if(collection == 'books') {
     docRef = docRef.orderBy("累計アクセス数", "desc").orderBy("作品ID");
     if(query['after']) {
-      after = query['after'].match(/(\d)+,(\d)+/);
+      after = query['after'].match(/(\d+),(\d+)/);
       docRef = docRef.startAfter(Number(after[1]), after[2]);
     }
     if(query['before']) {
-      before = query['before'].match(/(\d)+,(\d)+/);
-      docRef = docRef.startAfter(Number(before[1]), before[2]);
+      before = query['before'].match(/(\d+),(\d+)/);
+      docRef = docRef.endBefore(Number(before[1]), before[2]);
     }
   } else {
     docRef = docRef.orderBy("人物ID");
@@ -237,11 +235,13 @@ function setDocRefs(docRef, matchedIDs, query) {
 
 function nextLink(request, lastVisible) {
   let collection = request.path.match(/(books|persons)/)[1];
-  request.query["after"] = (collection == 'books') ? `${lastVisible["累計アクセス数"]},${lastVisible["作品ID"]}` : lastVisible["人物ID"];
+  let query = JSON.parse(JSON.stringify(request.query));
+  query["after"] = (collection == 'books') ? `${lastVisible["累計アクセス数"]},${lastVisible["作品ID"]}` : lastVisible["人物ID"];
 
   let arr = [];
-  for(let key in request.query) {
-    arr.push(key + '=' + request.query[key]);
+  for(let key in query) {
+    if(key == 'before') { continue; }
+    arr.push(key + '=' + query[key]);
   }
   let queryString = arr.join('&');
   return baseUrl + request.path + "?" + queryString;
@@ -250,11 +250,13 @@ function nextLink(request, lastVisible) {
 
 function prevLink(request, firstVisible) {
   let collection = request.path.match(/(books|persons)/)[1];
-  request.query["before"] = (collection == 'books') ? `${firstVisible["累計アクセス数"]},${firstVisible["作品ID"]}` : firstVisible["人物ID"];
+  let query = JSON.parse(JSON.stringify(request.query));
+  query["before"] = (collection == 'books') ? `${firstVisible["累計アクセス数"]},${firstVisible["作品ID"]}` : firstVisible["人物ID"];
 
   let arr = [];
-  for(let key in request.query) {
-    arr.push(key + '=' + request.query[key]);
+  for(let key in query) {
+    if(key == 'after') { continue; }
+    arr.push(key + '=' + query[key]);
   }
   let queryString = arr.join('&');
   return baseUrl + request.path + "?" + queryString;
