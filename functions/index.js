@@ -2,19 +2,17 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const fs = require('fs');
 const csv = require('csv-parse');
+const Book = require('./models/book');
 admin.initializeApp();
 
-const baseUrl = 'https://api.bungomail.com';
-const version = "v0";
 
 /**********************************************************************
 * Books
 ***********************************************************************/
-exports.books = functions.https.onRequest((request, response) => {
+exports.books = functions.https.onRequest(async (request, response) => {
   // response.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
 
-  let results = { books: [], links: {} };
-  let docRef = admin.firestore().collection('books');
+  const book = new Book(admin.firestore(), request.query);
 
   // 正規表現があるとき（他のクエリは無視）
   let regex = (request.query['作品名'] || "").match(/\/(.*)\//);
@@ -34,29 +32,7 @@ exports.books = functions.https.onRequest((request, response) => {
     });
   // それ以外はrequestから検索クエリ組み立て
   } else {
-    let limit = Math.min(request.query['limit'] || 50, 50);
-    docRef = setDocRef(docRef, request.query);
-    docRef.limit(limit + 1).get().then(function(querySnapshot) {
-      // +1件取れてるときは、元の件数に戻す
-      let hasNext = querySnapshot.size == limit + 1;
-      let slicedDocs = (hasNext) ? querySnapshot.docs.slice(0, querySnapshot.size - 1) : querySnapshot.docs;
-      if(request.query["before"]) { slicedDocs = slicedDocs.reverse(); } // beforeのときは逆順で取ってるで戻す
-
-      // [Next] limit+1取れてるか、beforeが存在すれば next linkつける
-      if(hasNext || request.query["before"]) {
-        let lastVisible = slicedDocs.slice(-1)[0].data();
-        results["links"]["next"] = nextLink(request, lastVisible);
-      }
-      // [Prev] before/afterの有無と、limit+1の組み合わせで判断
-      if(request.query["after"] || (request.query["before"] && hasNext)) {
-        let firstVisible = slicedDocs[0].data();
-        results["links"]["prev"] = prevLink(request, firstVisible);
-      }
-
-      // querySnapshot.forEach(function(doc) {
-      for(let i = 0; i < slicedDocs.length; i++) {
-        results["books"].push(slicedDocs[i].data());
-      };
+      const results = await book.search();
       response.status(200).send(results);
     })
     .catch(function(error) {
