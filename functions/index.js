@@ -5,6 +5,11 @@ const csv = require('csv-parse');
 const Book = require('./models/book');
 const Person = require('./models/person');
 admin.initializeApp();
+// var serviceAccount = require("./__serviceAccountKey.json");
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://zorapi-f6608.firebaseio.com"
+// });
 
 
 /**********************************************************************

@@ -3,6 +3,7 @@ const ngram = require('n-gram');
 module.exports = class Collection {
   constructor (firestore, query) {
     this.baseUrl = 'https://api.bungomail.com/v0';
+    // this.baseUrl = 'http://localhost:5000/zorapi-f6608/us-central1';
     this.firestore = firestore;
     this.query = query;
     this.results = { links: {} };
@@ -45,12 +46,12 @@ module.exports = class Collection {
 
     const lastVisible = docs.slice(-1)[0].data();
     let query = JSON.parse(JSON.stringify(this.query));
+    query['after'] = this.pagingParam(lastVisible);
 
     let arr = [];
     for(const key in query) {
       if(key == 'before') { continue; }
-      const val = (key == 'after') ? this.pagingParam(lastVisible) : query[key];
-      arr.push(key + '=' + val);
+      arr.push(key + '=' + query[key]);
     }
     let queryString = arr.join('&');
     return `${this.baseUrl}/${this.collection}?${queryString}`;
@@ -62,12 +63,12 @@ module.exports = class Collection {
 
     const firstVisible = docs[0].data();
     let query = JSON.parse(JSON.stringify(this.query));
+    query['before'] = this.pagingParam(firstVisible);
 
     let arr = [];
     for(let key in query) {
       if(key == 'after') { continue; }
-      const val = (key == 'before') ? this.pagingParam(firstVisible) : query[key];
-      arr.push(key + '=' + val);
+      arr.push(key + '=' + query[key]);
     }
     let queryString = arr.join('&');
     return `${this.baseUrl}/${this.collection}?${queryString}`;
