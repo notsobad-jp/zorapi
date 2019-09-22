@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const fs = require('fs');
 const csv = require('csv-parse');
+const ngram = require('n-gram');
 
 var serviceAccount = require("../__serviceAccountKey.json");
 admin.initializeApp({
@@ -18,36 +19,12 @@ admin.initializeApp({
 // let rs = fs.createReadStream('../tmp/csv/__all_books.csv');
 // rs.pipe(csv({columns: true}))
 // .on('data', (data) => {
-//   //既にレコードが存在してる場合
-//   if(records[data["作品ID"]]) {
-//     // 今回のが著者なら、人物データを引き継いでからデータ上書き
-//     if(data["役割フラグ"]=='著者') {
-//       data["人物"] = records[data["作品ID"]]["人物"];
-//       records[data["作品ID"]] = data;
-//     }
-//   }else {
-//     records[data["作品ID"]] = data;
+//   const tokenMap = {};
+//   for(const token of ngram.bigram(data["作品名"])) {
+//     tokenMap[token] = true;
 //   }
-//   // 型変換
-//   records[data["作品ID"]]["累計アクセス数"] = Number(data["累計アクセス数"]);
-//   records[data["作品ID"]]["文字数"] = Number(data["文字数"]);
-//   // 今回の人物を人物hashに追加
-//   records[data["作品ID"]]["人物"] = records[data["作品ID"]]["人物"] || {}
-//   records[data["作品ID"]]["人物"][data["役割フラグ"]] = {
-//     "人物ID": data["人物ID"],
-//     "姓名": data["姓名"],
-//     "姓": data["姓"],
-//     "名": data["名"],
-//     "姓読み": data["姓読み"],
-//     "名読み": data["名読み"],
-//     "姓読みソート用": data["姓読みソート用"],
-//     "名読みソート用": data["名読みソート用"],
-//     "姓ローマ字": data["姓ローマ字"],
-//     "名ローマ字": data["名ローマ字"],
-//     "生年月日": data["生年月日"],
-//     "没年月日": data["没年月日"],
-//     "人物著作権フラグ": data["人物著作権フラグ"],
-//   }
+//   records[data["作品ID"]] = {};
+//   records[data["作品ID"]]["作品名token"] = tokenMap;
 // });
 // rs.on('end', () => {
 //   let record_index = 0;
@@ -56,7 +33,7 @@ admin.initializeApp({
 //       batch_index = Math.floor(record_index/500);
 //       batches[batch_index] = admin.firestore().batch();
 //     }
-//     batches[batch_index].set(docRef.doc(key), records[key]);
+//     batches[batch_index].update(docRef.doc(key), {"作品名token": records[key]["作品名token"]});
 //     record_index++;
 //   });
 //
@@ -79,7 +56,11 @@ admin.initializeApp({
 //     batch_index = Math.floor(record_index/500);
 //     batches[batch_index] = admin.firestore().batch();
 //   }
-//   batches[batch_index].set(docRef.doc(data["人物ID"]), data);
+//   const nameTokenMap = {};
+//   for(const token of ngram.bigram(data["姓名"])) {
+//     nameTokenMap[token] = true;
+//   }
+//   batches[batch_index].update(docRef.doc(data["人物ID"]), {"姓名token": nameTokenMap});
 //   record_index++;
 // });
 // rs.on('end', () => {
