@@ -121,7 +121,11 @@ module.exports = class Collection {
       }
     }
 
-    this.results[this.collection] = docs.map((doc) => { return doc.data(); })
+    this.results[this.collection] = docs.map((doc) => {
+      const data = doc.data();
+      delete data[`${this.regexColumn}token`];  // レスポンスからtokenを削除
+      return data;
+    })
     return this.results;
   }
 }
