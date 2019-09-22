@@ -32,12 +32,13 @@ exports.books = functions.https.onRequest(async (request, response) => {
     });
   // それ以外はrequestから検索クエリ組み立て
   } else {
+    try {
       const results = await book.search();
       response.status(200).send(results);
-    })
-    .catch(function(error) {
+    }
+    catch(error) {
       response.status(500).send({ error: { message: error } });
-    });
+    }
   }
 });
 

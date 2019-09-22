@@ -11,7 +11,7 @@ module.exports = class Book extends Collection {
 
   startAfter(targetQuery) {
     const match = targetQuery.match(/(\d+),(\d+)/);
-    [Number(match[1]), match[2]];
+    return [Number(match[1]), match[2]];
   }
 
   afterParam(lastVisible) {

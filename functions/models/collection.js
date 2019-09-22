@@ -1,6 +1,6 @@
 module.exports = class Collection {
   constructor (firestore, query) {
-    this.baseUrl = 'https://api.bungomail.com/v1';
+    this.baseUrl = 'https://api.bungomail.com/v0';
     this.firestore = firestore;
     this.query = query;
     this.limit = Math.min(query['limit'] || 50, 50);
@@ -52,7 +52,7 @@ module.exports = class Collection {
       arr.push(key + '=' + query[key]);
     }
     let queryString = arr.join('&');
-    return baseUrl + request.path + "?" + queryString;
+    return this.baseUrl + this.path + "?" + queryString;
   }
 
   orderParam() {
@@ -76,7 +76,7 @@ module.exports = class Collection {
   setPaging(docRef) {
     const targetQuery = this.query['after'] || this.query['before'];
     if(!targetQuery) { return docRef; }
-    return docRef.startAfter(...this.startAfter());
+    return docRef.startAfter(...this.startAfter(targetQuery));
   }
 
   async search() {
