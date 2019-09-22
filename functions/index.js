@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const fs = require('fs');
 const csv = require('csv-parse');
 const Book = require('./models/book');
+const Person = require('./models/person');
 admin.initializeApp();
 
 
