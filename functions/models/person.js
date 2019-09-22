@@ -10,7 +10,7 @@ module.exports = class Person extends Collection {
   }
 
   startAfter(targetQuery) {
-    [targetQuery];
+    return [targetQuery];
   }
 
   pagingParam(doc) {
