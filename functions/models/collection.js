@@ -14,8 +14,8 @@ module.exports = class Collection {
 
   setQueries(docRef) {
     for(let [key, val] of Object.entries(this.query)) {
-      // ページング系の予約クエリはここではスキップ
-      if(["limit", "after", "before"].includes(key)) { continue; }
+      if(["limit", "after", "before"].includes(key)) { continue; } // ページング系の予約クエリはここではスキップ
+      if(!this.allowedColumns.includes(key)) { continue; } // 検索可能カラム以外もスキップ
 
       // 全文検索（対象カラムで//使ってるときのみ）
       const regexMatch = val.match(/\/(.*)\//);
