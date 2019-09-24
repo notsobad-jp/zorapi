@@ -3,20 +3,24 @@
     "public": "",
     "rewrites": [
       {
+        "source": "/v0/books",
+        "function": "books"
+      },
+      {
         "source": "/v0/books/*",
         "function": "book"
       },
       {
-        "source": "/v0/books",
-        "function": "books"
+        "source": "/v0/persons",
+        "function": "persons"
       },
       {
         "source": "/v0/persons/*",
         "function": "person"
       },
       {
-        "source": "/v0/persons",
-        "function": "persons"
+        "source": "/v0/persons/*/books",
+        "function": "personBooks"
       },
       {
         "source": "**",

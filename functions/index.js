@@ -84,3 +84,26 @@ exports.person = functions.https.onRequest((request, response) => {
     response.status(500).send({ error: { message: error } });
   });
 });
+
+
+/**********************************************************************
+* Person Books
+***********************************************************************/
+exports.personBooks = functions.https.onRequest((request, response) => {
+  cors(request, response, async () => {
+    const personId = request.path.match(/\/persons\/(\d*)\/.*/)[1]
+    const person = await admin.firestore().collection('persons').doc(personId).get();
+
+    const query = JSON.parse(JSON.stringify(request.query));
+    query["人物ID"] = personId;
+    const book = new Book(admin.firestore(), query);
+    try {
+      const results = await book.search();
+      results["person"] = person.data();
+      response.status(200).send(results);
+    }
+    catch(error) {
+      response.status(500).send({ error: { message: error } });
+    }
+  });
+});
