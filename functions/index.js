@@ -89,17 +89,21 @@ exports.person = functions.https.onRequest((request, response) => {
 /**********************************************************************
 * Person Books
 ***********************************************************************/
-exports.personBooks = functions.https.onRequest((request, response) => {
+exports.personBooks = functions.https.onRequest(async (request, response) => {
   cors(request, response, async () => {
     const personId = request.path.match(/\/persons\/(\d*)\/.*/)[1]
-    const person = await admin.firestore().collection('persons').doc(personId).get();
-
     const query = JSON.parse(JSON.stringify(request.query));
     query["人物ID"] = personId;
     const book = new Book(admin.firestore(), query);
+
     try {
-      const results = await book.search();
+      let person, results;
+      [person, results] = await Promise.all([
+        admin.firestore().collection('persons').doc(personId).get(),
+        book.search()
+      ]);
       results["person"] = person.data();
+      // if(results["link"]["next"]) {  } // Next/PrevリンクをpersonBooksのpathに上書き
       response.status(200).send(results);
     }
     catch(error) {
