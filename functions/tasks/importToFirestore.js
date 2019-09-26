@@ -15,7 +15,7 @@ admin.initializeApp({
 // let batch_index = 0;
 // let records = {};
 // let docRef = admin.firestore().collection('books');
-// let rs = fs.createReadStream('../tmp/csv/__all_books.csv');
+// let rs = fs.createReadStream('./tmp/csv/__all_books.csv');
 // rs.pipe(csv({columns: true}))
 // .on('data', (data) => {
 //   //既にレコードが存在してる場合
@@ -72,7 +72,7 @@ admin.initializeApp({
 // let record_index = 0;
 // let batch_index = 0;
 // let docRef = admin.firestore().collection('persons');
-// let rs = fs.createReadStream('../tmp/csv/__all_persons.csv'); // git管理しないのでtmp以下に配置
+// let rs = fs.createReadStream('./tmp/csv/__all_persons.csv'); // git管理しないのでtmp以下に配置
 // rs.pipe(csv({columns: true}))
 // .on('data', (data) => {
 //   if(record_index%500==0) {
