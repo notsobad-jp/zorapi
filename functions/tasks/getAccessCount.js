@@ -24,11 +24,13 @@ const countAccess = (results={}, filePath) => {
 
 const countTotalAccess = () => {
   let results = {};
-  for(let year = 2009; year <= 2019; year++ ) {
+  for(let year = 2009; year <= 2018; year++ ) {
     for(let month = 1; month <= 12; month++) {
       const mm = ( '00' + month ).slice(-2);
-      const filePath = `../../bungomail/tmp/aozorabunko/access_ranking/${year}_${mm}_txt.html`;
-      results = countAccess(results, filePath);
+      const textFilePath = `../../bungomail/tmp/aozorabunko/access_ranking/${year}_${mm}_txt.html`;
+      results = countAccess(results, textFilePath);
+      const xhtmlFilePath = `../../bungomail/tmp/aozorabunko/access_ranking/${year}_${mm}_xhtml.html`;
+      results = countAccess(results, xhtmlFilePath);
       console.log(`finished: ${year}-${mm}`);
     }
   }
@@ -36,4 +38,4 @@ const countTotalAccess = () => {
 }
 
 const results = countTotalAccess();
-fs.writeFileSync("./tmp/access.json", JSON.stringify(results));
+fs.writeFileSync("./tmp/access_year.json", JSON.stringify(results));
