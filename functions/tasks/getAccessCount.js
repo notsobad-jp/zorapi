@@ -7,7 +7,7 @@ const countAccess = (results={}, filePath) => {
   try {
     data = fs.readFileSync(filePath);
   } catch(err) {
-    return; // ファイルが存在しないときはスキップ（たまに12月がなかったりする）
+    return results; // ファイルが存在しないときはスキップ（たまに12月がなかったりする）
   }
   const $ = cheerio.load(data);
   $("table tr").each((i, elm)=>{
@@ -24,7 +24,7 @@ const countAccess = (results={}, filePath) => {
 
 const countTotalAccess = () => {
   let results = {};
-  for(let year = 2009; year <= 2009; year++ ) {
+  for(let year = 2009; year <= 2019; year++ ) {
     for(let month = 1; month <= 12; month++) {
       const mm = ( '00' + month ).slice(-2);
       const filePath = `../../bungomail/tmp/aozorabunko/access_ranking/${year}_${mm}_txt.html`;
