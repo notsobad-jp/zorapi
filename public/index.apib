@@ -1,11 +1,49 @@
 FORMAT: 1A
-HOST: http://localhost/api
+HOST: https://api.bungomail.com/v0
 
-# Sample API
-Frisbyを触ってみるために最低限の機能だけで作ったWebAPI
+# 青空文庫API - ZORAPI（ゾラピ）
+青空文庫の作品データを検索できる非公式APIです。
 
-## ユーザ登録 [POST /users]
-新規ユーザを登録する
+# Group Books
+作品情報API
+
+## 作品検索 [GET /books?作品名={%E4%BD%9C%E5%93%81%E5%90%8D}&limit={limit}&after={after}]
+検索条件に合致する作品を配列で返します。
+
++ Parameters
+    + %E4%BD%9C%E5%93%81%E5%90%8D: `走れメロス` (string, optional) - カラム名を指定して完全一致で検索できます。検索可能なカラムは公式スプレッドシートでオレンジ色になっているカラムです。
+    + limit: 10 (integer, optional) - 取得件数（max50）
+    + after: `100,10` (string, optional) - 累計アクセス数, 作品ID
+
++ Request (plain/text)
+
++ Response 200 (application/json)
+    + Attributes
+        + books: `true` (boolean) - 登録結果
+        + links: `oskamathis` (string) - ユーザ名
+
+
+## 作品データ取得 [GET /books/{id}]
+作品IDで指定した作品のデータを取得します。
+
++ Parameters
+    + id: 10 (integer) - 作品ID
+
++ Request (plain/text)
+
++ Response 200 (application/json)
+    + Attributes
+        + result: `true` (boolean) - 登録結果
+        + name: `oskamathis` (string) - ユーザ名
+        + email: `oskamathis@gmail.com` (string) - メールアドレス
+        + message: `User creation succeeded.` (string) - 登録メッセージ
+
+
+# Group Persons
+人物情報API
+
+## 人物検索 [GET /persons]
+検索条件に合致する人物情報を配列で返します。
 
 + Request (application/json)
     + Attributes
@@ -21,46 +59,18 @@ Frisbyを触ってみるために最低限の機能だけで作ったWebAPI
         + message: `User creation succeeded.` (string) - 登録メッセージ
 
 
-## トークン発行 [POST /login]
-JWT認証用のトークンを発行する
+## 人物データ取得 [GET /persons/:id]
+人物IDで指定した人物のデータを取得します。
 
 + Request (application/json)
     + Attributes
-        + email: `oskamathis@gmail.com` (string, required)
-        + password: `1xU35jQy` (string, required)
+        + name: `oskamathis` (string, required) - ユーザ名
+        + email: `oskamathis@gmail.com` (string, required) - メールアドレス
+        + password: `1xU35jQy` (string, required) - パスワード
 
 + Response 200 (application/json)
     + Attributes
-        + access_token: `{token}` (string)
-        + token_type: `bearer` (string)
-        + expire_in: `60` (number) - トークンの有効期限
-
-+ Response 401 (application/json)
-    + Body
-        ```
-        {
-            "error": "Unauthorized"
-        }
-        ```
-
-
-## ユーザ情報取得 [GET /user]
-自分自身のアカウント情報を取得する
-
-+ Request
-    + Headers
-        ```
-        Authorization: Bearer {token}
-        ```
-
-+ Response 200 (application/json)
-    + Body
-        ```
-        {
-            "id": 1,
-            "name": "oskamathis",
-            "email": "oskamathis@gmail.com",
-            "email_verified_at": null,
-            "created_at": "2019-05-23 12:19:26",
-            "updated_at": "2019-05-23 12:19:26"
-        }
+        + result: `true` (boolean) - 登録結果
+        + name: `oskamathis` (string) - ユーザ名
+        + email: `oskamathis@gmail.com` (string) - メールアドレス
+        + message: `User creation succeeded.` (string) - 登録メッセージ
