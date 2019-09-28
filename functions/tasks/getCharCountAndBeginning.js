@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 
 
 const parseFile = (filePath) => {
-  const data = fs.readFileSync(`./tmp/aozorabunko/${filePath}`);
+  const data = fs.readFileSync(`../tmp/aozorabunko/${filePath}`);
   const buf = new Buffer(data, 'binary');     //バイナリバッファを一時的に作成する
   const html = iconv.decode(buf, "Shift_JIS"); //作成したバッファを使い、iconv-liteでShift-jisからutf8に変換
   const $ = cheerio.load(html);
@@ -45,11 +45,11 @@ const categorize = (charsCount) => {
   return category;
 }
 
-const accessJsonFile = fs.readFileSync("./tmp/access.json", 'utf8');
+const accessJsonFile = fs.readFileSync("../tmp/access.json", 'utf8');
 const accessJson = JSON.parse(accessJsonFile);
 
-const readStream = fs.createReadStream("./tmp/csv/__all_books.csv"); // readStream is a read-only stream wit raw text content of the CSV file
-const writeStream = fs.createWriteStream("./tmp/output.csv"); // writeStream is a write-only stream to write on the disk
+const readStream = fs.createReadStream("../tmp/csv/__all_books.csv"); // readStream is a read-only stream wit raw text content of the CSV file
+const writeStream = fs.createWriteStream("../tmp/output.csv"); // writeStream is a write-only stream to write on the disk
 const results = [];
 
 readStream.pipe(csv.parse({columns: true}))

@@ -1,7 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const fs = require('fs');
-const csv = require('csv-parse');
 const cors = require('cors')({ origin: true });
 const Book = require('./models/book');
 const Person = require('./models/person');

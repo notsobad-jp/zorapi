@@ -27,9 +27,9 @@ const countTotalAccess = () => {
   for(let year = 2009; year <= 2019; year++ ) {
     for(let month = 1; month <= 12; month++) {
       const mm = ( '00' + month ).slice(-2);
-      const textFilePath = `./tmp/aozorabunko/access_ranking/${year}_${mm}_txt.html`;
+      const textFilePath = `../tmp/aozorabunko/access_ranking/${year}_${mm}_txt.html`;
       results = countAccess(results, textFilePath);
-      const xhtmlFilePath = `./tmp/aozorabunko/access_ranking/${year}_${mm}_xhtml.html`;
+      const xhtmlFilePath = `../tmp/aozorabunko/access_ranking/${year}_${mm}_xhtml.html`;
       results = countAccess(results, xhtmlFilePath);
       console.log(`finished: ${year}-${mm}`);
     }
