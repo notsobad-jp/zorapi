@@ -11,37 +11,37 @@ admin.initializeApp({
 });
 
 
-// // Books
-// let batches = [];
-// let batch_index = 0;
-// let records = {};
-// let docRef = admin.firestore().collection('books');
-// let rs = fs.createReadStream('../tmp/csv/__all_books.csv');
-// rs.pipe(csv({columns: true}))
-// .on('data', (data) => {
-//   const tokenMap = {};
-//   for(const token of ngram.bigram(data["作品名"])) {
-//     tokenMap[token] = true;
-//   }
-//   records[data["作品ID"]] = {};
-//   records[data["作品ID"]]["作品名token"] = tokenMap;
-// });
-// rs.on('end', () => {
-//   let record_index = 0;
-//   Object.keys(records).forEach(function(key) {
-//     if(record_index%500==0) {
-//       batch_index = Math.floor(record_index/500);
-//       batches[batch_index] = admin.firestore().batch();
-//     }
-//     batches[batch_index].update(docRef.doc(key), {"作品名token": records[key]["作品名token"]});
-//     record_index++;
-//   });
-//
-//   for(var i=0; i<batches.length; i++) {
-//     if(i==0) { continue; }
-//     batches[i].commit();
-//   }
-// });
+// Books
+let batches = [];
+let batch_index = 0;
+let records = {};
+let docRef = admin.firestore().collection('books');
+let rs = fs.createReadStream('../tmp/output.csv');
+rs.pipe(csv({columns: true}))
+.on('data', (data) => {
+  const tokenMap = {};
+  for(const token of ngram.bigram(data["作品名"])) {
+    tokenMap[token] = true;
+  }
+  records[data["作品ID"]] = {};
+  records[data["作品ID"]]["作品名token"] = tokenMap;
+});
+rs.on('end', () => {
+  let record_index = 0;
+  Object.keys(records).forEach(function(key) {
+    if(record_index%500==0) {
+      batch_index = Math.floor(record_index/500);
+      batches[batch_index] = admin.firestore().batch();
+    }
+    batches[batch_index].update(docRef.doc(key), {"作品名token": records[key]["作品名token"]});
+    record_index++;
+  });
+
+  for(var i=0; i<batches.length; i++) {
+    if(i==0) { continue; }
+    batches[i].commit();
+  }
+});
 //
 //
 // Persons

@@ -31,6 +31,15 @@ rs.pipe(csv({columns: true}))
   // 型変換
   records[data["作品ID"]]["累計アクセス数"] = Number(data["累計アクセス数"]);
   records[data["作品ID"]]["文字数"] = Number(data["文字数"]);
+
+  // LIKE検索用のtoken作成
+  const tokenMap = {};
+  for(const token of ngram.bigram(data["作品名"])) {
+    tokenMap[token] = true;
+  }
+  records[data["作品ID"]] = {};
+  records[data["作品ID"]]["作品名token"] = tokenMap;
+
   // 今回の人物を人物hashに追加
   records[data["作品ID"]]["人物"] = records[data["作品ID"]]["人物"] || {}
   records[data["作品ID"]]["人物"][data["役割フラグ"]] = {
@@ -82,6 +91,11 @@ rs.on('end', () => {
 //     batch_index = Math.floor(record_index/500);
 //     batches[batch_index] = admin.firestore().batch();
 //   }
+//   const nameTokenMap = {};
+//   for(const token of ngram.bigram(data["姓名"])) {
+//     nameTokenMap[token] = true;
+//   }
+//   data["姓名token"] = nameTokenMap;
 //   batches[batch_index].set(docRef.doc(data["人物ID"]), data);
 //   record_index++;
 // });
