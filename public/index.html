@@ -8,157 +8,219 @@
 </dd><dt>limit</dt><dd><code>integer</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>取得件数（max50）</p>
 </dd><dt>after</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>100,10</span></span><p>ページングは、after または beforeで「累計アクセス数, 作品ID」のオフセットを指定。Responseにこの値が付与されたlinksが返ってくるので、手動で計算する必要はありません。</p>
 </dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">plain/text</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">books</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">links</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis"</span>
-</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">books</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録結果"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ユーザ名"</span>
-    </span>}
+  "<span class="hljs-attribute">books</span>": <span class="hljs-value">[
+    {
+          "<span class="hljs-attribute">作品ID</span>": <span class="hljs-value"><span class="hljs-string">"1567"</span></span>,
+          "<span class="hljs-attribute">作品名</span>": <span class="hljs-value"><span class="hljs-string">"走れメロス"</span></span>,
+          "<span class="hljs-attribute">底本出版社名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">図書カードURL</span>": <span class="hljs-value"><span class="hljs-string">"https://www.aozora.gr.jp/cards/000035/card1567.html"</span></span>,
+          "<span class="hljs-attribute">底本出版社名1</span>": <span class="hljs-value"><span class="hljs-string">"ちくま文庫、筑摩書房"</span></span>,
+          "<span class="hljs-attribute">XHTML/HTMLファイル修正回数</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+          "<span class="hljs-attribute">作品名読み</span>": <span class="hljs-value"><span class="hljs-string">"はしれメロス"</span></span>,
+          "<span class="hljs-attribute">底本初版発行年1</span>": <span class="hljs-value"><span class="hljs-string">"1988（昭和63）年10月25日"</span></span>,
+          "<span class="hljs-attribute">人物著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span></span>,
+          "<span class="hljs-attribute">校正に使用した版2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">姓</span>": <span class="hljs-value"><span class="hljs-string">"太宰"</span></span>,
+          "<span class="hljs-attribute">底本初版発行年2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">公開日</span>": <span class="hljs-value"><span class="hljs-string">"2000-12-04"</span></span>,
+          "<span class="hljs-attribute">名読み</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span></span>,
+          "<span class="hljs-attribute">XHTML/HTMLファイルURL</span>": <span class="hljs-value"><span class="hljs-string">"https://www.aozora.gr.jp/cards/000035/files/1567_14913.html"</span></span>,
+          "<span class="hljs-attribute">底本名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">テキストファイル符号化方式</span>": <span class="hljs-value"><span class="hljs-string">"ShiftJIS"</span></span>,
+          "<span class="hljs-attribute">テキストファイルURL</span>": <span class="hljs-value"><span class="hljs-string">"https://www.aozora.gr.jp/cards/000035/files/1567_ruby_4948.zip"</span></span>,
+          "<span class="hljs-attribute">底本の親本出版社名1</span>": <span class="hljs-value"><span class="hljs-string">"筑摩書房"</span></span>,
+          "<span class="hljs-attribute">人物ID</span>": <span class="hljs-value"><span class="hljs-string">"35"</span></span>,
+          "<span class="hljs-attribute">底本の親本初版発行年2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">副題</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">カテゴリ</span>": <span class="hljs-value"><span class="hljs-string">"short"</span></span>,
+          "<span class="hljs-attribute">テキストファイル文字集合</span>": <span class="hljs-value"><span class="hljs-string">"JIS X 0208"</span></span>,
+          "<span class="hljs-attribute">書き出し</span>": <span class="hljs-value"><span class="hljs-string">"メロスは激怒した。"</span></span>,
+          "<span class="hljs-attribute">原題</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">XHTML/HTMLファイル符号化方式</span>": <span class="hljs-value"><span class="hljs-string">"ShiftJIS"</span></span>,
+          "<span class="hljs-attribute">テキストファイル修正回数</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+          "<span class="hljs-attribute">累計アクセス数</span>": <span class="hljs-value"><span class="hljs-number">1668185</span></span>,
+          "<span class="hljs-attribute">姓ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Dazai"</span></span>,
+          "<span class="hljs-attribute">最終更新日</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-17"</span></span>,
+          "<span class="hljs-attribute">没年月日</span>": <span class="hljs-value"><span class="hljs-string">"1948-06-13"</span></span>,
+          "<span class="hljs-attribute">テキストファイル最終更新日</span>": <span class="hljs-value"><span class="hljs-string">"2011-01-17"</span></span>,
+          "<span class="hljs-attribute">姓読み</span>": <span class="hljs-value"><span class="hljs-string">"だざい"</span></span>,
+          "<span class="hljs-attribute">名ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Osamu"</span></span>,
+          "<span class="hljs-attribute">名</span>": <span class="hljs-value"><span class="hljs-string">"治"</span></span>,
+          "<span class="hljs-attribute">底本名1</span>": <span class="hljs-value"><span class="hljs-string">"太宰治全集3"</span></span>,
+          "<span class="hljs-attribute">底本の親本初版発行年1</span>": <span class="hljs-value"><span class="hljs-string">"1975（昭和50）年6月～1976（昭和51）年6月"</span></span>,
+          "<span class="hljs-attribute">底本の親本名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">底本の親本名1</span>": <span class="hljs-value"><span class="hljs-string">"筑摩全集類聚版太宰治全集"</span></span>,
+          "<span class="hljs-attribute">校正者</span>": <span class="hljs-value"><span class="hljs-string">"高橋美奈子"</span></span>,
+          "<span class="hljs-attribute">入力に使用した版1</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">姓読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"たさい"</span></span>,
+          "<span class="hljs-attribute">XHTML/HTMLファイル最終更新日</span>": <span class="hljs-value"><span class="hljs-string">"2011-01-17"</span></span>,
+          "<span class="hljs-attribute">作品著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span></span>,
+          "<span class="hljs-attribute">ソート用読み</span>": <span class="hljs-value"><span class="hljs-string">"はしれめろす"</span></span>,
+          "<span class="hljs-attribute">入力に使用した版2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">入力者</span>": <span class="hljs-value"><span class="hljs-string">"金川一之"</span></span>,
+          "<span class="hljs-attribute">底本の親本出版社名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">副題読み</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">文字遣い種別</span>": <span class="hljs-value"><span class="hljs-string">"新字新仮名"</span></span>,
+          "<span class="hljs-attribute">役割フラグ</span>": <span class="hljs-value"><span class="hljs-string">"著者"</span></span>,
+          "<span class="hljs-attribute">姓名</span>": <span class="hljs-value"><span class="hljs-string">"太宰治"</span></span>,
+          "<span class="hljs-attribute">文字数</span>": <span class="hljs-value"><span class="hljs-number">10344</span></span>,
+          "<span class="hljs-attribute">分類番号</span>": <span class="hljs-value"><span class="hljs-string">"NDC 913"</span></span>,
+          "<span class="hljs-attribute">XHTML/HTMLファイル文字集合</span>": <span class="hljs-value"><span class="hljs-string">"JIS X 0208"</span></span>,
+          "<span class="hljs-attribute">初出</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+          "<span class="hljs-attribute">人物</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">著者</span>": <span class="hljs-value">{
+                      "<span class="hljs-attribute">人物著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span></span>,
+                      "<span class="hljs-attribute">生年月日</span>": <span class="hljs-value"><span class="hljs-string">"1909-06-19"</span></span>,
+                      "<span class="hljs-attribute">姓ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Dazai"</span></span>,
+                      "<span class="hljs-attribute">姓</span>": <span class="hljs-value"><span class="hljs-string">"太宰"</span></span>,
+                      "<span class="hljs-attribute">没年月日</span>": <span class="hljs-value"><span class="hljs-string">"1948-06-13"</span></span>,
+                      "<span class="hljs-attribute">姓読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"たさい"</span></span>,
+                      "<span class="hljs-attribute">姓読み</span>": <span class="hljs-value"><span class="hljs-string">"だざい"</span></span>,
+                      "<span class="hljs-attribute">名読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span></span>,
+                      "<span class="hljs-attribute">名読み</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span></span>,
+                      "<span class="hljs-attribute">名ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Osamu"</span></span>,
+                      "<span class="hljs-attribute">名</span>": <span class="hljs-value"><span class="hljs-string">"治"</span></span>,
+                      "<span class="hljs-attribute">人物ID</span>": <span class="hljs-value"><span class="hljs-string">"35"</span></span>,
+                      "<span class="hljs-attribute">姓名</span>": <span class="hljs-value"><span class="hljs-string">"太宰治"</span>
+                </span>}
+          </span>}</span>,
+          "<span class="hljs-attribute">生年月日</span>": <span class="hljs-value"><span class="hljs-string">"1909-06-19"</span></span>,
+          "<span class="hljs-attribute">校正に使用した版1</span>": <span class="hljs-value"><span class="hljs-string">"1998（平成10）年6月15日第2刷"</span></span>,
+          "<span class="hljs-attribute">名読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span>
+    </span>},
+    ...
+  ]</span>,
+  "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">next</span>": <span class="hljs-value"><span class="hljs-string">"https://api.bungomail.com/v0/books?after=277382,42286"</span>
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="books-作品データ取得" class="resource"><h3 class="resource-heading">作品データ取得 <a href="#books-作品データ取得" class="permalink">&nbsp;&para;</a></h3><div id="books-作品データ取得-get" class="action get"><h4 class="action-heading"><div class="name">作品データ取得</div><a href="#books-作品データ取得-get" class="method get">GET</a><code class="uri">/books/{id}</code></h4><p>作品IDで指定した作品のデータを取得します。</p>
 <h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.bungomail.com/v0</span>/books/<span class="hljs-attribute" title="id">10</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>integer</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>作品ID</p>
 </dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">plain/text</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">result</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis"</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis@gmail.com"</span></span>,
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"User creation succeeded."</span>
-</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">result</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録結果"</span>
+  "<span class="hljs-attribute">book</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">作品ID</span>": <span class="hljs-value"><span class="hljs-string">"1567"</span></span>,
+    "<span class="hljs-attribute">作品名</span>": <span class="hljs-value"><span class="hljs-string">"走れメロス"</span></span>,
+    "<span class="hljs-attribute">底本出版社名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">図書カードURL</span>": <span class="hljs-value"><span class="hljs-string">"https://www.aozora.gr.jp/cards/000035/card1567.html"</span></span>,
+    "<span class="hljs-attribute">底本出版社名1</span>": <span class="hljs-value"><span class="hljs-string">"ちくま文庫、筑摩書房"</span></span>,
+    "<span class="hljs-attribute">XHTML/HTMLファイル修正回数</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+    "<span class="hljs-attribute">作品名読み</span>": <span class="hljs-value"><span class="hljs-string">"はしれメロス"</span></span>,
+    "<span class="hljs-attribute">底本初版発行年1</span>": <span class="hljs-value"><span class="hljs-string">"1988（昭和63）年10月25日"</span></span>,
+    "<span class="hljs-attribute">人物著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span></span>,
+    "<span class="hljs-attribute">校正に使用した版2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">姓</span>": <span class="hljs-value"><span class="hljs-string">"太宰"</span></span>,
+    "<span class="hljs-attribute">底本初版発行年2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">公開日</span>": <span class="hljs-value"><span class="hljs-string">"2000-12-04"</span></span>,
+    "<span class="hljs-attribute">名読み</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span></span>,
+    "<span class="hljs-attribute">XHTML/HTMLファイルURL</span>": <span class="hljs-value"><span class="hljs-string">"https://www.aozora.gr.jp/cards/000035/files/1567_14913.html"</span></span>,
+    "<span class="hljs-attribute">底本名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">テキストファイル符号化方式</span>": <span class="hljs-value"><span class="hljs-string">"ShiftJIS"</span></span>,
+    "<span class="hljs-attribute">テキストファイルURL</span>": <span class="hljs-value"><span class="hljs-string">"https://www.aozora.gr.jp/cards/000035/files/1567_ruby_4948.zip"</span></span>,
+    "<span class="hljs-attribute">底本の親本出版社名1</span>": <span class="hljs-value"><span class="hljs-string">"筑摩書房"</span></span>,
+    "<span class="hljs-attribute">人物ID</span>": <span class="hljs-value"><span class="hljs-string">"35"</span></span>,
+    "<span class="hljs-attribute">底本の親本初版発行年2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">副題</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">カテゴリ</span>": <span class="hljs-value"><span class="hljs-string">"short"</span></span>,
+    "<span class="hljs-attribute">テキストファイル文字集合</span>": <span class="hljs-value"><span class="hljs-string">"JIS X 0208"</span></span>,
+    "<span class="hljs-attribute">書き出し</span>": <span class="hljs-value"><span class="hljs-string">"メロスは激怒した。"</span></span>,
+    "<span class="hljs-attribute">原題</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">XHTML/HTMLファイル符号化方式</span>": <span class="hljs-value"><span class="hljs-string">"ShiftJIS"</span></span>,
+    "<span class="hljs-attribute">テキストファイル修正回数</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+    "<span class="hljs-attribute">累計アクセス数</span>": <span class="hljs-value"><span class="hljs-number">1668185</span></span>,
+    "<span class="hljs-attribute">姓ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Dazai"</span></span>,
+    "<span class="hljs-attribute">最終更新日</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-17"</span></span>,
+    "<span class="hljs-attribute">没年月日</span>": <span class="hljs-value"><span class="hljs-string">"1948-06-13"</span></span>,
+    "<span class="hljs-attribute">テキストファイル最終更新日</span>": <span class="hljs-value"><span class="hljs-string">"2011-01-17"</span></span>,
+    "<span class="hljs-attribute">姓読み</span>": <span class="hljs-value"><span class="hljs-string">"だざい"</span></span>,
+    "<span class="hljs-attribute">名ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Osamu"</span></span>,
+    "<span class="hljs-attribute">名</span>": <span class="hljs-value"><span class="hljs-string">"治"</span></span>,
+    "<span class="hljs-attribute">底本名1</span>": <span class="hljs-value"><span class="hljs-string">"太宰治全集3"</span></span>,
+    "<span class="hljs-attribute">底本の親本初版発行年1</span>": <span class="hljs-value"><span class="hljs-string">"1975（昭和50）年6月～1976（昭和51）年6月"</span></span>,
+    "<span class="hljs-attribute">底本の親本名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">底本の親本名1</span>": <span class="hljs-value"><span class="hljs-string">"筑摩全集類聚版太宰治全集"</span></span>,
+    "<span class="hljs-attribute">校正者</span>": <span class="hljs-value"><span class="hljs-string">"高橋美奈子"</span></span>,
+    "<span class="hljs-attribute">入力に使用した版1</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">姓読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"たさい"</span></span>,
+    "<span class="hljs-attribute">XHTML/HTMLファイル最終更新日</span>": <span class="hljs-value"><span class="hljs-string">"2011-01-17"</span></span>,
+    "<span class="hljs-attribute">作品著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span></span>,
+    "<span class="hljs-attribute">ソート用読み</span>": <span class="hljs-value"><span class="hljs-string">"はしれめろす"</span></span>,
+    "<span class="hljs-attribute">入力に使用した版2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">入力者</span>": <span class="hljs-value"><span class="hljs-string">"金川一之"</span></span>,
+    "<span class="hljs-attribute">底本の親本出版社名2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">副題読み</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">文字遣い種別</span>": <span class="hljs-value"><span class="hljs-string">"新字新仮名"</span></span>,
+    "<span class="hljs-attribute">役割フラグ</span>": <span class="hljs-value"><span class="hljs-string">"著者"</span></span>,
+    "<span class="hljs-attribute">姓名</span>": <span class="hljs-value"><span class="hljs-string">"太宰治"</span></span>,
+    "<span class="hljs-attribute">文字数</span>": <span class="hljs-value"><span class="hljs-number">10344</span></span>,
+    "<span class="hljs-attribute">分類番号</span>": <span class="hljs-value"><span class="hljs-string">"NDC 913"</span></span>,
+    "<span class="hljs-attribute">XHTML/HTMLファイル文字集合</span>": <span class="hljs-value"><span class="hljs-string">"JIS X 0208"</span></span>,
+    "<span class="hljs-attribute">初出</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">人物</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">著者</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">人物著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span></span>,
+        "<span class="hljs-attribute">生年月日</span>": <span class="hljs-value"><span class="hljs-string">"1909-06-19"</span></span>,
+        "<span class="hljs-attribute">姓ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Dazai"</span></span>,
+        "<span class="hljs-attribute">姓</span>": <span class="hljs-value"><span class="hljs-string">"太宰"</span></span>,
+        "<span class="hljs-attribute">没年月日</span>": <span class="hljs-value"><span class="hljs-string">"1948-06-13"</span></span>,
+        "<span class="hljs-attribute">姓読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"たさい"</span></span>,
+        "<span class="hljs-attribute">姓読み</span>": <span class="hljs-value"><span class="hljs-string">"だざい"</span></span>,
+        "<span class="hljs-attribute">名読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span></span>,
+        "<span class="hljs-attribute">名読み</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span></span>,
+        "<span class="hljs-attribute">名ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Osamu"</span></span>,
+        "<span class="hljs-attribute">名</span>": <span class="hljs-value"><span class="hljs-string">"治"</span></span>,
+        "<span class="hljs-attribute">人物ID</span>": <span class="hljs-value"><span class="hljs-string">"35"</span></span>,
+        "<span class="hljs-attribute">姓名</span>": <span class="hljs-value"><span class="hljs-string">"太宰治"</span>
+      </span>}
     </span>}</span>,
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ユーザ名"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">email</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"メールアドレス"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録メッセージ"</span>
-    </span>}
+    "<span class="hljs-attribute">生年月日</span>": <span class="hljs-value"><span class="hljs-string">"1909-06-19"</span></span>,
+    "<span class="hljs-attribute">校正に使用した版1</span>": <span class="hljs-value"><span class="hljs-string">"1998（平成10）年6月15日第2刷"</span></span>,
+    "<span class="hljs-attribute">名読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"おさむ"</span>
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="persons" class="resource-group"><h2 class="group-heading">Persons <a href="#persons" class="permalink">&para;</a></h2><p>人物情報API</p>
-<div id="persons-人物検索" class="resource"><h3 class="resource-heading">人物検索 <a href="#persons-人物検索" class="permalink">&nbsp;&para;</a></h3><div id="persons-人物検索-get" class="action get"><h4 class="action-heading"><div class="name">人物検索</div><a href="#persons-人物検索-get" class="method get">GET</a><code class="uri">/persons</code></h4><p>検索条件に合致する人物情報を配列で返します。</p>
-<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.bungomail.com/v0</span>/persons</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis"</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis@gmail.com"</span></span>,
-  "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"1xU35jQy"</span>
-</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ユーザ名"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">email</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"メールアドレス"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">password</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"パスワード"</span>
-    </span>}
-  </span>}</span>,
-  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-    <span class="hljs-string">"name"</span>,
-    <span class="hljs-string">"email"</span>,
-    <span class="hljs-string">"password"</span>
-  ]
-</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">result</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis"</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis@gmail.com"</span></span>,
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"User creation succeeded."</span>
-</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">result</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録結果"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ユーザ名"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">email</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"メールアドレス"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録メッセージ"</span>
-    </span>}
+<div id="persons-人物検索" class="resource"><h3 class="resource-heading">人物検索 <a href="#persons-人物検索" class="permalink">&nbsp;&para;</a></h3><div id="persons-人物検索-get" class="action get"><h4 class="action-heading"><div class="name">人物検索</div><a href="#persons-人物検索-get" class="method get">GET</a><code class="uri">/persons?姓名=&amp;limit={limit}&amp;after={after}</code></h4><p>検索条件に合致する人物情報を配列で返します。
+検索可能なカラムは、スプレッドシートでオレンジ色になっているカラムです。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.bungomail.com/v0</span>/persons?姓名=&limit=<span class="hljs-attribute" title="limit">10</span>&after=<span class="hljs-attribute" title="after">100</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>姓名</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>太宰治</span></span><p>検索対象カラムを指定して、完全一致で検索できます。また「姓名」カラムのみ<code>姓名=/芥川/</code>とすることでLIKE検索可能です。</p>
+</dd><dt>limit</dt><dd><code>integer</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>取得件数（max50）</p>
+</dd><dt>after</dt><dd><code>integer</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>100</span></span><p>ページングは、after または beforeで「人物ID」のオフセットを指定。Responseにこの値が付与されたlinksが返ってくるので、手動で計算する必要はありません。</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">plain/text</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+"<span class="hljs-attribute">persons</span>": <span class="hljs-value">[
+    {
+        "<span class="hljs-attribute">生年月日</span>": <span class="hljs-value"><span class="hljs-string">"1904-12-28"</span></span>,
+        "<span class="hljs-attribute">姓ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Hori"</span></span>,
+        "<span class="hljs-attribute">姓</span>": <span class="hljs-value"><span class="hljs-string">"堀"</span></span>,
+        "<span class="hljs-attribute">没年月日</span>": <span class="hljs-value"><span class="hljs-string">"1953-05-28"</span></span>,
+        "<span class="hljs-attribute">姓読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"ほり"</span></span>,
+        "<span class="hljs-attribute">姓読み</span>": <span class="hljs-value"><span class="hljs-string">"ほり"</span></span>,
+        "<span class="hljs-attribute">名読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"たつお"</span></span>,
+        "<span class="hljs-attribute">名読み</span>": <span class="hljs-value"><span class="hljs-string">"たつお"</span></span>,
+        "<span class="hljs-attribute">名ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Tatsuo"</span></span>,
+        "<span class="hljs-attribute">名</span>": <span class="hljs-value"><span class="hljs-string">"辰雄"</span></span>,
+        "<span class="hljs-attribute">人物ID</span>": <span class="hljs-value"><span class="hljs-string">"1030"</span></span>,
+        "<span class="hljs-attribute">姓名</span>": <span class="hljs-value"><span class="hljs-string">"堀辰雄"</span></span>,
+        "<span class="hljs-attribute">人物著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span>
+    </span>},
+]</span>,
+"<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">next</span>": <span class="hljs-value"><span class="hljs-string">"https://api.bungomail.com/v0/persons?after=1081"</span>
+</span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="persons-人物データ取得" class="resource"><h3 class="resource-heading">人物データ取得 <a href="#persons-人物データ取得" class="permalink">&nbsp;&para;</a></h3><div id="persons-人物データ取得-get" class="action get"><h4 class="action-heading"><div class="name">人物データ取得</div><a href="#persons-人物データ取得-get" class="method get">GET</a><code class="uri">/persons/{id}</code></h4><p>人物IDで指定した人物のデータを取得します。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.bungomail.com/v0</span>/persons/<span class="hljs-attribute" title="id">10</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>integer</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>10</span></span><p>人物ID</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">person</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">生年月日</span>": <span class="hljs-value"><span class="hljs-string">"1904-12-28"</span></span>,
+    "<span class="hljs-attribute">姓ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Hori"</span></span>,
+    "<span class="hljs-attribute">姓</span>": <span class="hljs-value"><span class="hljs-string">"堀"</span></span>,
+    "<span class="hljs-attribute">没年月日</span>": <span class="hljs-value"><span class="hljs-string">"1953-05-28"</span></span>,
+    "<span class="hljs-attribute">姓読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"ほり"</span></span>,
+    "<span class="hljs-attribute">姓読み</span>": <span class="hljs-value"><span class="hljs-string">"ほり"</span></span>,
+    "<span class="hljs-attribute">名読みソート用</span>": <span class="hljs-value"><span class="hljs-string">"たつお"</span></span>,
+    "<span class="hljs-attribute">名読み</span>": <span class="hljs-value"><span class="hljs-string">"たつお"</span></span>,
+    "<span class="hljs-attribute">名ローマ字</span>": <span class="hljs-value"><span class="hljs-string">"Tatsuo"</span></span>,
+    "<span class="hljs-attribute">名</span>": <span class="hljs-value"><span class="hljs-string">"辰雄"</span></span>,
+    "<span class="hljs-attribute">人物ID</span>": <span class="hljs-value"><span class="hljs-string">"1030"</span></span>,
+    "<span class="hljs-attribute">姓名</span>": <span class="hljs-value"><span class="hljs-string">"堀辰雄"</span></span>,
+    "<span class="hljs-attribute">人物著作権フラグ</span>": <span class="hljs-value"><span class="hljs-string">"なし"</span>
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="persons-人物データ取得" class="resource"><h3 class="resource-heading">人物データ取得 <a href="#persons-人物データ取得" class="permalink">&nbsp;&para;</a></h3><div id="persons-人物データ取得-get" class="action get"><h4 class="action-heading"><div class="name">人物データ取得</div><a href="#persons-人物データ取得-get" class="method get">GET</a><code class="uri">/persons/:id</code></h4><p>人物IDで指定した人物のデータを取得します。</p>
-<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.bungomail.com/v0</span>/persons/:id</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis"</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis@gmail.com"</span></span>,
-  "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"1xU35jQy"</span>
-</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ユーザ名"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">email</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"メールアドレス"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">password</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"パスワード"</span>
-    </span>}
-  </span>}</span>,
-  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-    <span class="hljs-string">"name"</span>,
-    <span class="hljs-string">"email"</span>,
-    <span class="hljs-string">"password"</span>
-  ]
-</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">result</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis"</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"oskamathis@gmail.com"</span></span>,
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"User creation succeeded."</span>
-</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">result</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録結果"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ユーザ名"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">email</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"メールアドレス"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"登録メッセージ"</span>
-    </span>}
-  </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 28 Sep 2019</p><script>/* eslint-env browser */
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 29 Sep 2019</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 
