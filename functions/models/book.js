@@ -7,7 +7,7 @@ module.exports = class Book extends Collection {
     this.docRef = firestore.collection(this.collection);
     this.orderBy = [["累計アクセス数", "desc"], ["作品ID", "asc"]];
     this.regexColumn = "作品名"; //全文検索対象カラム
-    this.allowedColumns = ["作品ID","作品名","文字遣い種別","作品著作権フラグ","人物ID","姓名","姓","名","人物著作権フラグ","入力者","校正者","カテゴリ"];
+    this.allowedColumns = ["作品ID","作品名","文字遣い種別","作品著作権フラグ","人物ID","姓名","人物著作権フラグ","入力者","校正者","カテゴリ"];
   }
 
   startAfter(targetQuery) {
