@@ -43,36 +43,36 @@ module.exports = class Collection {
   // [Next] limit+1取れてるか、beforeが存在すれば next linkつける
   nextLink(docs) {
     if(!this.hasNext && !this.query["before"]) { return; }
-    let arr = [];
+
+    const query = JSON.parse(JSON.stringify(this.query));
+    const arr = [];
     for(const key in query) {
       if(key == 'before') { continue; }
       if(!this.allowedColumns.includes(key)) { continue; } // 検索可能カラム以外もスキップ
       arr.push(key + '=' + query[key]);
     }
-
     const lastVisible = docs.slice(-1)[0].data();
-    let query = JSON.parse(JSON.stringify(this.query));
-    arr.push(`${after}=${this.pagingParam(lastVisible)}`);
+    arr.push(`after=${this.pagingParam(lastVisible)}`);
 
-    let queryString = arr.join('&');
+    const queryString = arr.join('&');
     return `${this.baseUrl}/${this.collection}?${queryString}`;
   }
 
   // [Prev] before/afterの有無と、limit+1の組み合わせで判断
   prevLink(docs) {
     if(!this.query["after"] && (!this.query["before"] || !this.hasNext)) { return; }
-    let arr = [];
-    for(let key in query) {
+
+    const query = JSON.parse(JSON.stringify(this.query));
+    const arr = [];
+    for(const key in query) {
       if(key == 'after') { continue; }
       if(!this.allowedColumns.includes(key)) { continue; } // 検索可能カラム以外もスキップ
       arr.push(key + '=' + query[key]);
     }
-
     const firstVisible = docs[0].data();
-    let query = JSON.parse(JSON.stringify(this.query));
-    arr.push(`${before}=${this.pagingParam(firstVisible)}`);
+    arr.push(`before=${this.pagingParam(firstVisible)}`);
 
-    let queryString = arr.join('&');
+    const queryString = arr.join('&');
     return `${this.baseUrl}/${this.collection}?${queryString}`;
   }
 

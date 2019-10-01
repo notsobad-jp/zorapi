@@ -25,7 +25,9 @@ exports.books = functions.https.onRequest(async (request, response) => {
       response.status(200).send(results);
     }
     catch(error) {
-      response.status(500).send({ error: { message: error } });
+      console.log("------")
+      console.log(error);
+      response.status(500).send({ error: { message: String(error) } });
     }
   });
 });
