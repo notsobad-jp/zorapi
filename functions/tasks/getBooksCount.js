@@ -12,8 +12,8 @@ admin.initializeApp({
 
 
 // Count books
-const results = {};
 const defaultCount = { all: 0, flash: 0, shortshort: 0, short: 0, novelette: 0, novel: 0 }
+const results = {all: JSON.parse(JSON.stringify(defaultCount))};
 const rs = fs.createReadStream('../tmp/output.csv');
 rs.pipe(csv({columns: true}))
 .on('data', (data) => {
@@ -22,6 +22,9 @@ rs.pipe(csv({columns: true}))
   results[data["人物ID"]][data["カテゴリ"]] = results[data["人物ID"]][data["カテゴリ"]] || 0;
   results[data["人物ID"]]["all"]++;
   results[data["人物ID"]][data["カテゴリ"]]++;
+
+  results["all"]["all"]++;
+  results["all"][data["カテゴリ"]]++;
 });
 rs.on('end', () => {
   fs.writeFileSync("../tmp/booksCount.json", JSON.stringify(results));
