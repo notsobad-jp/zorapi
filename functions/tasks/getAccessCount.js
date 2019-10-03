@@ -38,4 +38,4 @@ const countTotalAccess = () => {
 }
 
 const results = countTotalAccess();
-fs.writeFileSync("./tmp/access.json", JSON.stringify(results));
+fs.writeFileSync("../tmp/access.json", JSON.stringify(results));
