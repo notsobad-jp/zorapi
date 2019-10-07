@@ -11,11 +11,11 @@ module.exports = class Book extends Collection {
   }
 
   startAfter(targetQuery) {
-    const match = targetQuery.match(/(\d+),(\d+)/);
+    const match = targetQuery.match(/(\d+)-(\d+)/);
     return [Number(match[1]), match[2]];
   }
 
   pagingParam(doc) {
-    return `${doc["累計アクセス数"]},${doc["作品ID"]}`;
+    return `${doc["累計アクセス数"]}-${doc["作品ID"]}`;
   }
 }

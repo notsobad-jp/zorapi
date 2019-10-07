@@ -18,7 +18,7 @@ https://docs.google.com/spreadsheets/d/1n04e6POI04TBt-3HJUH10-T5cxhPZHcBWmFA4tSH
 + Parameters
     + %E4%BD%9C%E5%93%81%E5%90%8D: `走れメロス` (string, optional) - 検索対象カラムを指定して、完全一致で検索できます。また「作品名」カラムのみ`作品名=/走れ/`とすることでLIKE検索可能です。
     + limit: 10 (integer, optional) - 取得件数（max50）
-    + after: `100,10` (string, optional) - ページングは、after または beforeで「累計アクセス数, 作品ID」のオフセットを指定。Responseにこの値が付与されたlinksが返ってくるので、手動で計算する必要はありません。
+    + after: `100-10` (string, optional) - ページングは、after または beforeで「累計アクセス数-作品ID」のオフセットを指定。Responseにこの値が付与されたlinksが返ってくるので、手動で計算する必要はありません。
 
 + Request (plain/text)
 
@@ -107,7 +107,7 @@ https://docs.google.com/spreadsheets/d/1n04e6POI04TBt-3HJUH10-T5cxhPZHcBWmFA4tSH
         ...
       ],
       "links": {
-        "next": "https://api.bungomail.com/v0/books?after=277382,42286"
+        "next": "https://api.bungomail.com/v0/books?after=277382-42286"
       }
     }
 
