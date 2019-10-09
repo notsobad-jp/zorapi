@@ -18,8 +18,8 @@ admin.initializeApp();
 * Books
 ***********************************************************************/
 exports.books = functions.https.onRequest(async (request, response) => {
-  // response.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
   cors(request, response, async () => {
+    response.set('Cache-Control', 'public, max-age=31536000, s-maxage=31536000');
     const book = new Book(admin.firestore(), request.query);
     try {
       const results = await book.search();
@@ -37,6 +37,7 @@ exports.books = functions.https.onRequest(async (request, response) => {
 ***********************************************************************/
 exports.book = functions.https.onRequest(async (request, response) => {
   cors(request, response, async () => {
+    response.set('Cache-Control', 'public, max-age=31536000, s-maxage=31536000');
     let results = { book: {} };
     const id = request.path.match(/\/books\/(\d*)/)[1]
     let docRef = admin.firestore().collection('books').doc(id);
@@ -59,6 +60,7 @@ exports.book = functions.https.onRequest(async (request, response) => {
 ***********************************************************************/
 exports.persons = functions.https.onRequest(async (request, response) => {
   cors(request, response, async () => {
+    response.set('Cache-Control', 'public, max-age=31536000, s-maxage=31536000');
     const person = new Person(admin.firestore(), request.query);
     try {
       const results = await person.search();
@@ -76,6 +78,7 @@ exports.persons = functions.https.onRequest(async (request, response) => {
 ***********************************************************************/
 exports.person = functions.https.onRequest(async (request, response) => {
   cors(request, response, async () => {
+    response.set('Cache-Control', 'public, max-age=31536000, s-maxage=31536000');
     let results = { person: {} };
     const id = request.path.match(/\/persons\/(\d*)/)[1]
     let docRef = admin.firestore().collection('persons').doc(id);
@@ -98,6 +101,7 @@ exports.person = functions.https.onRequest(async (request, response) => {
 ***********************************************************************/
 exports.personBooks = functions.https.onRequest(async (request, response) => {
   cors(request, response, async () => {
+    response.set('Cache-Control', 'public, max-age=31536000, s-maxage=31536000');
     const personId = request.path.match(/\/persons\/(\d*)\/.*/)[1]
     const query = JSON.parse(JSON.stringify(request.query));
     query["人物ID"] = personId;
